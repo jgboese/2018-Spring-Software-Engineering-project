@@ -30,7 +30,7 @@ public class FBDatabase {
         this.Color = Color;
         this.FallColor = FallColor;
         this.Fruit = Fruit;
-            
+
         }
 
     }
