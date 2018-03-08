@@ -16,7 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ViewData"></activity>
+        <activity android:name=".ViewData" />
+        <activity
+            android:name=".GoogleLogin"
+            android:label="@string/title_activity_google_login"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

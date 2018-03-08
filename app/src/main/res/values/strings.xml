@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TreeTour</string>
+    <string name="title_activity_google_login">GoogleLogin</string>
 </resources>
