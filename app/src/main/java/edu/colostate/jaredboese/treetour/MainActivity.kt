@@ -15,8 +15,8 @@ class MainActivity : AppCompatActivity() {
     }
     internal var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         mAuth.addAuthStateListener(mAuthListener)
     }
 
