@@ -14,12 +14,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
     internal var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-
     override fun onResume() {
         super.onResume()
         mAuth.addAuthStateListener(mAuthListener)
+        startActivity(Intent(this,mapActivity::class.java))
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,4 +29,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-
