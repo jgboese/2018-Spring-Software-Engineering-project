@@ -59,9 +59,9 @@ implements GoogleMap.OnMarkerClickListener,
                 .title("Lincoln Park"));
         marker.setTag(0);
         parkMap.setOnMarkerClickListener(this);
-        /*parkMap.setMyLocationEnabled(true);
+        parkMap.setMyLocationEnabled(true);
         parkMap.setOnMyLocationButtonClickListener(this);
-        parkMap.setOnMyLocationClickListener(this);*/
+        parkMap.setOnMyLocationClickListener(this);
     }
     @Override
     public boolean onMarkerClick(final Marker marker) {
