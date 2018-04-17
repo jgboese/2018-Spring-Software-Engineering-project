@@ -53,7 +53,7 @@ public class GoogleLogin extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth){
                 if (firebaseAuth.getCurrentUser() != null){
-                    startActivity(new Intent(GoogleLogin.this, MainActivity.class));
+                    startActivity(new Intent(GoogleLogin.this, mapActivity.class));
                 }
             }
         };
