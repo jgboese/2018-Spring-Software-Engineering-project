@@ -1,7 +1,9 @@
 package edu.colostate.jaredboese.treetour;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -35,7 +37,40 @@ public class ViewData extends CoreActivity {
             treename = extras.getString("TreeName");
             //The key argument here must match that used in the other activity
         }
-        mRef = FirebaseDatabase.getInstance().getReference().child(treename);
+            mRef = FirebaseDatabase.getInstance().getReference().child(treename);
+            ImageView mImageview = (ImageView) findViewById(R.id.imageView);
+            if (treename.equals("CanadaRed")) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mImageview.setImageDrawable(getResources().getDrawable(R.drawable.canada, getApplicationContext().getTheme()));
+                } else {
+                    mImageview.setImageDrawable(getResources().getDrawable(R.drawable.canada));
+                }
+            } else if (treename.equals("WeepingMulberry")) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mImageview.setImageDrawable(getResources().getDrawable(R.drawable.weeping, getApplicationContext().getTheme()));
+                } else {
+                    mImageview.setImageDrawable(getResources().getDrawable(R.drawable.weeping));
+                }
+            } else if (treename.equals("Hackberry")) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mImageview.setImageDrawable(getResources().getDrawable(R.drawable.hakberry, getApplicationContext().getTheme()));
+                } else {
+                    mImageview.setImageDrawable(getResources().getDrawable(R.drawable.hakberry));
+                }
+            } else if (treename.equals("Giant Sequoia")) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mImageview.setImageDrawable(getResources().getDrawable(R.drawable.giant, getApplicationContext().getTheme()));
+                } else {
+                    mImageview.setImageDrawable(getResources().getDrawable(R.drawable.giant));
+                }
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mImageview.setImageDrawable(getResources().getDrawable(R.drawable.ivory, getApplicationContext().getTheme()));
+                } else {
+                    mImageview.setImageDrawable(getResources().getDrawable(R.drawable.ivory));
+                }
+            }
+
 
         mListview = (ListView) findViewById(R.id.listview);
         mArray = new ArrayList();
