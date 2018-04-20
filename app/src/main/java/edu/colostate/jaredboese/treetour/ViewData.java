@@ -22,6 +22,7 @@ public class ViewData extends CoreActivity {
     private DatabaseReference mRef;
     private ArrayList mArray;
     private String mKey;
+    private String treename;
 
 
 
@@ -29,7 +30,12 @@ public class ViewData extends CoreActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_data);
-        mRef = FirebaseDatabase.getInstance().getReference().child("CanadaRed");
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            treename = extras.getString("TreeName");
+            //The key argument here must match that used in the other activity
+        }
+        mRef = FirebaseDatabase.getInstance().getReference().child(treename);
 
         mListview = (ListView) findViewById(R.id.listview);
         mArray = new ArrayList();

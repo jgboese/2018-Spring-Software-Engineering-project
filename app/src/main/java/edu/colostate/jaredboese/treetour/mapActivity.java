@@ -46,6 +46,7 @@ implements GoogleMap.OnMarkerClickListener,
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest locationRequest;
     private Marker currentLocationMarker;
+    private String[] TreeNames = new String[] {"CanadaRed","WeepingMulberry","Ivory Silk","Hackberry","Giant Sequoia"};
  //   private LocationCallback mLocationCallback;
     String provider;
 
@@ -147,11 +148,35 @@ implements GoogleMap.OnMarkerClickListener,
                         MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
             }
         }
+      //  Marker[] markerarray = new Marker[5];
 
-        Marker marker = parkMap.addMarker(new MarkerOptions()
+
+       Marker marker = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.074245, -108.551828))
-                .title("Lincoln Park"));
+                .title(TreeNames[0]));
         marker.setTag(0);
+
+
+        Marker m2 = parkMap.addMarker(new MarkerOptions()
+                .position(new LatLng(39.074345, -108.551728))
+                .title(TreeNames[1]));
+        m2.setTag(1);
+
+        Marker m3 = parkMap.addMarker(new MarkerOptions()
+                .position(new LatLng(39.074295, -108.551808))
+                .title(TreeNames[2]));
+        marker.setTag(2);
+
+        Marker m4 = parkMap.addMarker(new MarkerOptions()
+                .position(new LatLng(39.074195, -108.551858))
+                .title(TreeNames[3]));
+        marker.setTag(3);
+
+        Marker m5 = parkMap.addMarker(new MarkerOptions()
+                .position(new LatLng(39.074995, -108.551158))
+                .title(TreeNames[4]));
+        marker.setTag(4);
+
         parkMap.setOnMarkerClickListener(this);
         parkMap.setMyLocationEnabled(true);
         parkMap.setOnMyLocationButtonClickListener(this);
@@ -163,7 +188,11 @@ implements GoogleMap.OnMarkerClickListener,
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
-        startActivity(new Intent(this, ViewData.class));
+        Intent i = new Intent(mapActivity.this,ViewData.class);
+        String title = marker.getTitle();
+   //     int tag = (int) marker.getTag();
+        i.putExtra("TreeName",title);
+        startActivity(i);
         return false;
     }
     @Override
@@ -188,6 +217,7 @@ implements GoogleMap.OnMarkerClickListener,
         googleClient.connect();
 
     }
+
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
