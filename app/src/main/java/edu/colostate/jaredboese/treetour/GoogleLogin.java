@@ -12,11 +12,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,6 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class GoogleLogin extends AppCompatActivity {
+    private static final String TAG = "foo";
     SignInButton button;
     FirebaseAuth mAuth;
     private final static int RC_SIGN_IN=123;
@@ -77,15 +80,17 @@ public class GoogleLogin extends AppCompatActivity {
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RC_SIGN_IN){
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()){
-                GoogleSignInAccount account = result.getSignInAccount();
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
-            }
-            else{
-                //Sign in failed
-                Toast.makeText(GoogleLogin.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
+            } catch (ApiException e) {
+                Log.w(TAG, "Google Sign in failed", e);
+                Toast.makeText(GoogleLogin.this, "Authentication Failed 1", Toast.LENGTH_SHORT).show();
+
+
             }
         }
     }
@@ -101,7 +106,7 @@ public class GoogleLogin extends AppCompatActivity {
                 }
                 else{
                     Log.w("TAG", "signInWithCredential:success", task.getException());
-                    Toast.makeText(GoogleLogin.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GoogleLogin.this, "Authentication Failed 2", Toast.LENGTH_SHORT).show();
                     //updateUI(null); Temporary Comment
                 }
             }

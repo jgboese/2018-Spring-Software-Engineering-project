@@ -29,7 +29,7 @@ public class ViewData extends CoreActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_data);
-        mRef = FirebaseDatabase.getInstance().getReference().child("TreeDat");
+        mRef = FirebaseDatabase.getInstance().getReference().child("CanadaRed");
 
         mListview = (ListView) findViewById(R.id.listview);
         mArray = new ArrayList();

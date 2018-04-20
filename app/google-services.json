@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "756825199769-tm4nts5ag9lnd353g5m1hpllqv4jndd3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.colostate.jaredboese.treetour",
+            "certificate_hash": "a71f26bb1cb310d27916a0bf95b16a0f8a64a490"
+          }
+        },
+        {
           "client_id": "756825199769-j7b4vcf0uforv60uv7o80ig2e163kkrf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
