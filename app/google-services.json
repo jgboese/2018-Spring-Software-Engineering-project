@@ -15,6 +15,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "756825199769-tm4nts5ag9lnd353g5m1hpllqv4jndd3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.colostate.jaredboese.treetour",
+            "certificate_hash": "a71f26bb1cb310d27916a0bf95b16a0f8a64a490"
+          }
+        },
+        {
+          "client_id": "756825199769-j7b4vcf0uforv60uv7o80ig2e163kkrf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.colostate.jaredboese.treetour",
+            "certificate_hash": "add35404c0cb4c872fa6023f9e33417bdab446a5"
+          }
+        },
+        {
+          "client_id": "756825199769-g5fe2368ijdaels3jdq7poij9lebnkar.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.colostate.jaredboese.treetour",
+            "certificate_hash": "fae64e81c6561e454dc7d0e52f27ccdf6b5faf33"
+          }
+        },
+        {
           "client_id": "756825199769-mhi27pgs1a4o143p7fdqu7em46gqld8i.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +53,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "756825199769-mhi27pgs1a4o143p7fdqu7em46gqld8i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
