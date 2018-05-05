@@ -1,158 +1,82 @@
 package edu.colostate.jaredboese.treetour;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
+
+import static java.lang.Math.abs;
 
 public class mapActivity extends FragmentActivity
-implements GoogleMap.OnMarkerClickListener,
+        implements GoogleMap.OnMarkerClickListener,
         GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
         OnMapReadyCallback,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         LocationListener{
-    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 123;
+    private static final int MY_PERMISSIONS_REQUEST_LOCATION = 123;
     private GoogleMap parkMap;
-    private GoogleApiClient googleClient;
     private Location lastLocation;
-    private FusedLocationProviderClient mFusedLocationClient;
-    private LocationRequest locationRequest;
     private Marker currentLocationMarker;
+    protected LocationManager locationManager;
+    protected Criteria criteria = new Criteria();
     private String[] TreeNames = new String[] {"CanadaRed","WeepingMulberry","Ivory Silk","Hackberry","Giant Sequoia",
-    "AmericanElm","AmericanLinden","Apricot","Aristocrat Pear","AtlasCedar","AustrianPine","AutumnBlaze",
-    "AutumnPurple","Betchel Crabapple","BirchbarkCherry","Bluespruce","Bristlecone","Buckthorn","Bur Oak",
-    "CrimsonCloud","CrimsonKing","Dawn Redwood","EasternCottonwood","EasternRedbud","EnglishOak",
-    "Flamingo Boxelder","FrontierElm","Ginkgo","GoldRain","GreenAsh","GreenVase",
-    "IncenseCedar","KentuckyCoffee","LacebarkElm","LindenHybrid","LittleleafLinden","LondonPlane",
-    "MountainAsh","Mulberry","NewPortPlum","NorwayMaple","OrnaPear","OrnaCrab","PinyonPine","PonderosaPine",
-    "PurpleLocust","Red HorseChesnut","RedspirePear","RockyMountainJ","RussianHawthorn","ScotchPine",
-    "Sensation","SiberianElm","ShumardOak","SpringSnow","SugarMaple","Summit Ash","Swamp WhiteOak","Thornless Cockspur",
-    "ThornlessHoney","TriColorBeech","Tuliptree","TurkishFilbert","UtahJunpier","WesternCatalpa",
-    "WhiteSpruce","WinterKing","Yellowhorn"};
- //   private LocationCallback mLocationCallback;
+            "AmericanElm","AmericanLinden","Apricot","Aristocrat Pear","AtlasCedar","AustrianPine","AutumnBlaze",
+            "AutumnPurple","Betchel Crabapple","BirchbarkCherry","Bluespruce","Bristlecone","Buckthorn","Bur Oak",
+            "CrimsonCloud","CrimsonKing","Dawn Redwood","EasternCottonwood","EasternRedbud","EnglishOak",
+            "Flamingo Boxelder","FrontierElm","Ginkgo","GoldRain","GreenAsh","GreenVase",
+            "IncenseCedar","KentuckyCoffee","LacebarkElm","LindenHybrid","LittleleafLinden","LondonPlane",
+            "MountainAsh","Mulberry","NewPortPlum","NorwayMaple","OrnaPear","OrnaCrab","PinyonPine","PonderosaPine",
+            "PurpleLocust","Red HorseChesnut","RedspirePear","RockyMountainJ","RussianHawthorn","ScotchPine",
+            "Sensation","SiberianElm","ShumardOak","SpringSnow","SugarMaple","Summit Ash","Swamp WhiteOak","Thornless Cockspur",
+            "ThornlessHoney","TriColorBeech","Tuliptree","TurkishFilbert","UtahJunpier","WesternCatalpa",
+            "WhiteSpruce","WinterKing","Yellowhorn"};
     String provider;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        checkLocationPermission();
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        com.google.android.gms.maps.SupportMapFragment mapFragment =
-                (com.google.android.gms.maps.SupportMapFragment) getSupportFragmentManager()
-                        .findFragmentById(R.id.ParkMap);
+        com.google.android.gms.maps.SupportMapFragment mapFragment = (com.google.android.gms.maps.SupportMapFragment)
+                getSupportFragmentManager().findFragmentById(R.id.ParkMap);
         mapFragment.getMapAsync(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         checkLocationPermission();
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                MY_PERMISSIONS_REQUEST_LOCATION);
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        provider = locationManager.getBestProvider(new Criteria(), false);
     }
-
-    LocationCallback mLocationCallback = new LocationCallback(){
-        @Override
-        public void onLocationResult(LocationResult locationResult) {
-            for (Location location : locationResult.getLocations()) {
-                Log.i("MainActivity", "Location: " + location.getLatitude() + " " + location.getLongitude());
-
-            }
-        };
-
-    };
-
- /*   public boolean checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.title_location_permission)
-                        .setMessage(R.string.text_location_permission)
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                //Prompt the user once explanation has been shown
-                                ActivityCompat.requestPermissions(mapActivity.this,
-                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                        MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-                            }
-                        })
-                        .create()
-                        .show();
-
-
-            } else {
-                // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-            }
-            return false;
-        } else {
-            return true;
-        }
-    }*/
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch(requestCode){
-            case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION:
-                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    // Premission is granted
-                    if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                        if(googleClient == null){
-                            buildGoogleApiClient();
-                        }
-                        parkMap.setMyLocationEnabled(true);
-                    }
-                }
-                else{ // Permission is not granted
-                    Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show();
-                }
-                return;
-        }
-
-    }
-
     @Override
     public void onMapReady(GoogleMap map) {
         parkMap = map;
+        parkMap.setMaxZoomPreference(21);
+        parkMap.setMinZoomPreference(19);
+        parkMap.getUiSettings().setScrollGesturesEnabled(false);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(mapActivity.this,
@@ -161,13 +85,28 @@ implements GoogleMap.OnMarkerClickListener,
             } else {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+                        MY_PERMISSIONS_REQUEST_LOCATION);
             }
         }
-      //  Marker[] markerarray = new Marker[5];
+        //checkLocationPermission();
+        //Location location = locationManager.getLastKnownLocation(locationManager
+        //        .getBestProvider(criteria, false));
+         /*
+        Marker[] markers = new Marker[5];
+        int i=0;
+        while(i<5){
+            markers[i] = parkMap.addMarker(new MarkerOptions()
+            .position(new LatLng(extras.getFloat(Lat), extras.getFloat(Lng))
+            .title(TreeNames[i]));
+            markers[i].setTag(i);
+            i++;
+        if(extras.getString(Type)=="Conifer")
+            markers[i].setIcon(R.drawable.conifer);
+        else
+            markers[i].serIcon(R.drawable.deciduous);
+        }*/
 
-
-       Marker marker = parkMap.addMarker(new MarkerOptions()
+        Marker marker = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0742663, -108.5493843))
                 .title(TreeNames[0]));
         marker.setTag(0);
@@ -327,7 +266,7 @@ implements GoogleMap.OnMarkerClickListener,
                 .position(new LatLng(39.073509, -108.5514231))
                 .title(TreeNames[31]));
         marker.setTag(31);*/
-       //Kentucky Coffee
+        //Kentucky Coffee
         Marker m33 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0741759, -108.5511806))
                 .title(TreeNames[32]));
@@ -516,29 +455,14 @@ implements GoogleMap.OnMarkerClickListener,
                 .title(TreeNames[67]));
         marker.setTag(67);
 
-
-
-
-
-
-
-
-        parkMap.setOnMarkerClickListener(this);
         parkMap.setMyLocationEnabled(true);
         parkMap.setOnMyLocationButtonClickListener(this);
         parkMap.setOnMyLocationClickListener(this);
-
-
+        parkMap.setOnMarkerClickListener(this);
     }
-
-
     @Override
     public boolean onMarkerClick(final Marker marker) {
-        Intent i = new Intent(mapActivity.this,ViewData.class);
-        String title = marker.getTitle();
-   //     int tag = (int) marker.getTag();
-        i.putExtra("TreeName",title);
-        startActivity(i);
+        startActivity(new Intent(this, ViewData.class));
         return false;
     }
     @Override
@@ -553,94 +477,104 @@ implements GoogleMap.OnMarkerClickListener,
         // (the camera animates to the user's current position).
         return false;
     }
-
-    protected synchronized void buildGoogleApiClient(){
-        googleClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        googleClient.connect();
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkLocationPermission();
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            locationManager.requestLocationUpdates(provider, 400, 1, this);
+        }
     }
 
-
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        locationRequest = new LocationRequest();
-        locationRequest.setInterval(1000);
-        locationRequest.setFastestInterval(1000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-           // LocationServices.FusedLocationApi.requestLocationUpdates(googleClient, locationRequest, this);
-            mFusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            // Got last known location. In some rare situations, this can be null.
-                            if (location != null) {
-                                // Logic to handle location object
+    protected void onPause() {
+        super.onPause();
+        checkLocationPermission();
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            locationManager.removeUpdates(this);
+        }
+    }
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Title")
+                        .setMessage("Message")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ActivityCompat.requestPermissions(mapActivity.this,
+                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                        MY_PERMISSIONS_REQUEST_LOCATION);
                             }
-                        }
-                    });
-        }
-
-    }
-
-    public boolean checkLocationPermission(){
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-            return  false;
-        }
-        return  true;
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        lastLocation = location;
-
-        if(currentLocationMarker != null){
-            currentLocationMarker.remove();
-        }
-
-        LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latlng);
-        markerOptions.title("your current location");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-        currentLocationMarker = parkMap.addMarker(markerOptions);
-
-        parkMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
-        parkMap.animateCamera(CameraUpdateFactory.zoomBy(10));
-
-        if(googleClient != null){
-         //   LocationServices.FusedLocationApi.removeLocationUpdates(googleClient,this);
-            mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+                        })
+                        .create()
+                        .show();
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
         }
     }
-
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // location-related task you need to do.
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        //Request location updates:
+                        locationManager.requestLocationUpdates(provider, 400, 1, this);
+                    }
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    // startActivity(new Intent(this, ViewData.class));
+                }
+                return;
+            }
+        }
     }
-
     @Override
     public void onProviderEnabled(String provider) {
 
     }
-
     @Override
     public void onProviderDisabled(String provider) {
+
+    }
+    @Override
+    public void onLocationChanged(Location location) {
+        lastLocation = location;
+        if(currentLocationMarker != null){
+            currentLocationMarker.remove();
+        }
+        //Toast.makeText(this, "Location changed", Toast.LENGTH_SHORT).show();
+        LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+        //MarkerOptions markerOptions = new MarkerOptions();
+        //markerOptions.position(latlng);
+        //markerOptions.title("your current location");
+        //markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+        //currentLocationMarker = parkMap.addMarker(markerOptions);
+        parkMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
+    }
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
 
     }
 }
