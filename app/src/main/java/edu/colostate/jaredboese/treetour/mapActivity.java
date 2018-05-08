@@ -31,6 +31,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.lang.Math.abs;
 
 public class mapActivity extends FragmentActivity
@@ -46,16 +49,39 @@ public class mapActivity extends FragmentActivity
     protected LocationManager locationManager;
     protected Criteria criteria = new Criteria();
     private String[] TreeNames = new String[] {"CanadaRed","WeepingMulberry","Ivory Silk","Hackberry","Giant Sequoia",
-            "AmericanElm","AmericanLinden","Apricot","Aristocrat Pear","AtlasCedar","AustrianPine","AutumnBlaze",
-            "AutumnPurple","Betchel Crabapple","BirchbarkCherry","Bluespruce","Bristlecone","Buckthorn","Bur Oak",
+            "AmericanElm","AmericanLinden","Apricot","Aristocrat Pear",/*"AtlasCedar","AustrianPine",*/"AutumnBlaze",
+            "AutumnPurple","Betchel Crabapple","BirchbarkCherry","Bluespruce",/*"Bristlecone",*/"Buckthorn","Bur Oak",
             "CrimsonCloud","CrimsonKing","Dawn Redwood","EasternCottonwood","EasternRedbud","EnglishOak",
             "Flamingo Boxelder","FrontierElm","Ginkgo","GoldRain","GreenAsh","GreenVase",
-            "IncenseCedar","KentuckyCoffee","LacebarkElm","LindenHybrid","LittleleafLinden","LondonPlane",
-            "MountainAsh","Mulberry","NewPortPlum","NorwayMaple","OrnaPear","OrnaCrab","PinyonPine","PonderosaPine",
-            "PurpleLocust","Red HorseChesnut","RedspirePear","RockyMountainJ","RussianHawthorn","ScotchPine",
-            "Sensation","SiberianElm","ShumardOak","SpringSnow","SugarMaple","Summit Ash","Swamp WhiteOak","Thornless Cockspur",
-            "ThornlessHoney","TriColorBeech","Tuliptree","TurkishFilbert","UtahJunpier","WesternCatalpa",
-            "WhiteSpruce","WinterKing","Yellowhorn"};
+            /*"IncenseCedar",*/"KentuckyCoffee","LacebarkElm","LindenHybrid","LittleleafLinden","LondonPlane",
+            "MountainAsh","Mulberry",/*"NewPortPlum",*/"NorwayMaple","OrnaPear","OrnaCrab","PinyonPine","PonderosaPine",
+            "PurpleLocust","Red HorseChesnut","RedspirePear","RockyMountainJ",/*"RussianHawthorn",*/"ScotchPine",
+            "Sensation","SiberianElm",/*"ShumardOak",*/"SpringSnow","SugarMaple","Summit Ash","Swamp WhiteOak","Thornless Cockspur",
+            "ThornlessHoney","TriColorBeech",/*"Tuliptree",*/"TurkishFilbert",/*"UtahJunpier",*/"WesternCatalpa",
+            /*"WhiteSpruce",*/"WinterKing","Yellowhorn"};
+    private LatLng[] locations = new LatLng[] {new LatLng(39.0742663, -108.5493843), new LatLng(39.0741504, -108.5492618),
+            new LatLng(39.0741242, -108.5486979), new LatLng(39.0742909, -108.5490879), new LatLng(39.0740934, -108.5489564),
+            new LatLng(39.0736086, -108.549962), new LatLng(39.0739769, -108.5510632), new LatLng(39.0745023, -108.5491173),
+            new LatLng(39.0736086, -108.549962), /*new LatLng(39.0736086, -108.549962), new LatLng(39.074387, -108.548378),*/
+            new LatLng(39.0739733, -108.5514381), new LatLng(39.0742073, -108.5487163), new LatLng(39.073705, -108.551438),
+            new LatLng(39.074768, -108.5509806), new LatLng(39.0739733, -108.5514381), /*new LatLng(39.0746731, -108.5508771),*/
+            new LatLng(39.0745776, -108.548776), new LatLng(39.0749561, -108.5518873), new LatLng(39.0739348, -108.5515128),
+            new LatLng(39.0739064, -108.549803), new LatLng(39.0746931, -108.5509023), new LatLng(39.0740323, -108.5506498),
+            new LatLng(39.0741996, -108.5516606), new LatLng(39.0738982, -108.5485951), new LatLng(39.0734252, -108.5516718),
+            new LatLng(39.0745973, -108.5515721), new LatLng(39.0740746, -108.5516371), new LatLng(39.073509, -108.5514231),
+            new LatLng(39.0749684, -108.551932), new LatLng(39.073509, -108.5514231), /*new LatLng(39.0741759, -108.5511806),*/
+            new LatLng(39.0739131, -108.5500567), new LatLng(39.0740292, -108.5513712), new LatLng(39.0739338, -108.5510996),
+            new LatLng(39.0734497, -108.551929), new LatLng(39.0739, -108.551719), new LatLng(39.0737932, -108.5496831),
+            /*new LatLng(39.073509, -108.5514231),*/ new LatLng(39.0740743, -108.5513482), new LatLng(39.0746053, -108.551159),
+            new LatLng(39.0737677, -108.5511678), new LatLng(39.073509, -108.5514231), new LatLng(39.0741961, -108.5508158),
+            new LatLng(39.0735008, -108.550292), new LatLng(39.0735653, -108.549126), new LatLng(39.0747578, -108.5509623),
+            new LatLng(39.0750126, -108.5521945), /*new LatLng(39.073509, -108.5514231),*/ new LatLng(39.0752279, -108.5508726),
+            new LatLng(39.074871, -108.5509511), new LatLng(39.0746731, -108.5508771), /*new LatLng(39.073509, -108.5514231),*/
+            new LatLng(39.073705, -108.5499708), new LatLng(39.0742554, -108.5515343), new LatLng(39.0734463, -108.5497535),
+            new LatLng(39.0745845, -108.5487139), new LatLng(39.0741064, -108.5495885), new LatLng(39.0745121, -108.5515095),
+            new LatLng(39.073822, -108.5519241), /*new LatLng(39.073509, -108.5514231),*/ new LatLng(39.0740271, -108.5518247),
+            /*new LatLng(39.073509, -108.5514231),*/ new LatLng(39.0737584, -108.5518237), /*new LatLng(39.073509, -108.5514231),*/
+            new LatLng(39.0745675, -108.5513996), new LatLng(39.0738283, -108.5486639)};
     String provider;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,24 +114,16 @@ public class mapActivity extends FragmentActivity
                         MY_PERMISSIONS_REQUEST_LOCATION);
             }
         }
-        //checkLocationPermission();
-        //Location location = locationManager.getLastKnownLocation(locationManager
-        //        .getBestProvider(criteria, false));
-         /*
-        Marker[] markers = new Marker[5];
-        int i=0;
-        while(i<5){
-            markers[i] = parkMap.addMarker(new MarkerOptions()
-            .position(new LatLng(extras.getFloat(Lat), extras.getFloat(Lng))
-            .title(TreeNames[i]));
+        Marker[] markers = new Marker[TreeNames.length];
+        int i = 0;
+        while (i < TreeNames.length-1)
+        {
+            markers[i]=parkMap.addMarker(new MarkerOptions()
+                .position(locations[i]).title(TreeNames[i]));
             markers[i].setTag(i);
             i++;
-        if(extras.getString(Type)=="Conifer")
-            markers[i].setIcon(R.drawable.conifer);
-        else
-            markers[i].serIcon(R.drawable.deciduous);
-        }*/
-
+        }
+/*
         Marker marker = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0742663, -108.5493843))
                 .title(TreeNames[0]));
@@ -142,10 +160,10 @@ public class mapActivity extends FragmentActivity
                 .title(TreeNames[6]));
         marker.setTag(6);
 
-        /*Marker m8 = parkMap.addMarker(new MarkerOptions()
+        Marker m8 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0736086, -108.549962))
                 .title(TreeNames[7]));
-        marker.setTag(7);*/
+        marker.setTag(7);
 
         Marker m9 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0745023, -108.5491173))
@@ -155,12 +173,12 @@ public class mapActivity extends FragmentActivity
         /*Marker m10 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0736086, -108.549962))
                 .title(TreeNames[9]));
-        marker.setTag(9);*/
+        marker.setTag(9);
 
         /*Marker m11 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0736086, -108.549962))
                 .title(TreeNames[10]));
-        marker.setTag(10);*/
+        marker.setTag(10);
 
         Marker m12 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.074387, -108.548378))
@@ -190,7 +208,7 @@ public class mapActivity extends FragmentActivity
         /*Marker m17 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0739733, -108.5514381))
                 .title(TreeNames[16]));
-        marker.setTag(16);*/
+        marker.setTag(16);
 
         Marker m18 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0746731, -108.5508771))
@@ -265,7 +283,7 @@ public class mapActivity extends FragmentActivity
        /* Marker m32 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.073509, -108.5514231))
                 .title(TreeNames[31]));
-        marker.setTag(31);*/
+        marker.setTag(31);
         //Kentucky Coffee
         Marker m33 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0741759, -108.5511806))
@@ -307,7 +325,7 @@ public class mapActivity extends FragmentActivity
                 .position(new LatLng(39.073509, -108.5514231))
                 .title(TreeNames[39]));
         marker.setTag(39);
-        */
+
         //Norway Maple
         Marker m41 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0740743, -108.5513482))
@@ -324,12 +342,12 @@ public class mapActivity extends FragmentActivity
                 .title(TreeNames[42]));
         marker.setTag(42);
         //Pinyon Pine
-        /*
+
         Marker m44 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.073509, -108.5514231))
                 .title(TreeNames[43]));
         marker.setTag(43);
-        */
+
         //Ponderosa Pine
         Marker m45 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0741961, -108.5508158))
@@ -361,7 +379,7 @@ public class mapActivity extends FragmentActivity
                 .position(new LatLng(39.073509, -108.5514231))
                 .title(TreeNames[49]));
         marker.setTag(49);
-        */
+
         //Scotch Pine
         Marker m51 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0752279, -108.5508726))
@@ -383,7 +401,7 @@ public class mapActivity extends FragmentActivity
                 .position(new LatLng(39.073509, -108.5514231))
                 .title(TreeNames[53]));
         marker.setTag(53);
-        */
+
         // Spring snow crabapple
         Marker m55 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.073705, -108.5499708))
@@ -409,7 +427,7 @@ public class mapActivity extends FragmentActivity
                 .position(new LatLng(39.0741064, -108.5495885))
                 .title(TreeNames[58]));
         marker.setTag(58);
-        //Thronless Honey
+        //Thornless Honey
         Marker m60 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0745121, -108.5515095))
                 .title(TreeNames[59]));
@@ -423,7 +441,7 @@ public class mapActivity extends FragmentActivity
         /*Marker m62 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.073509, -108.5514231))
                 .title(TreeNames[61]));
-        marker.setTag(61);*/
+        marker.setTag(61);
         //Turkish Filbert
         Marker m63 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0740271, -108.5518247))
@@ -433,7 +451,7 @@ public class mapActivity extends FragmentActivity
         /*Marker m64 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.073509, -108.5514231))
                 .title(TreeNames[63]));
-        marker.setTag(63);*/
+        marker.setTag(63);
         //Western Cata
         Marker m65 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0737584, -108.5518237))
@@ -443,7 +461,7 @@ public class mapActivity extends FragmentActivity
         /*Marker m66 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.073509, -108.5514231))
                 .title(TreeNames[65]));
-        marker.setTag(65);*/
+        marker.setTag(65);
         //Winter King
         Marker m67 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0745675, -108.5513996))
@@ -453,8 +471,10 @@ public class mapActivity extends FragmentActivity
         Marker m68 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0738283, -108.5486639))
                 .title(TreeNames[67]));
-        marker.setTag(67);
-
+        marker.setTag(67);*/
+        LatLng location = new LatLng(locationManager.getLastKnownLocation(provider).getLatitude(),
+                locationManager.getLastKnownLocation(provider).getLongitude());
+        parkMap.moveCamera(CameraUpdateFactory.newLatLng(location));
         parkMap.setMyLocationEnabled(true);
         parkMap.setOnMyLocationButtonClickListener(this);
         parkMap.setOnMyLocationClickListener(this);
@@ -462,7 +482,11 @@ public class mapActivity extends FragmentActivity
     }
     @Override
     public boolean onMarkerClick(final Marker marker) {
-        startActivity(new Intent(this, ViewData.class));
+        Intent i = new Intent(mapActivity.this,ViewData.class);
+        String title = marker.getTitle();
+        //  int tag = (int) marker.getTag();
+        i.putExtra("TreeName",title);
+        startActivity(i);
         return false;
     }
     @Override
@@ -560,11 +584,6 @@ public class mapActivity extends FragmentActivity
     }
     @Override
     public void onLocationChanged(Location location) {
-        lastLocation = location;
-        if(currentLocationMarker != null){
-            currentLocationMarker.remove();
-        }
-        //Toast.makeText(this, "Location changed", Toast.LENGTH_SHORT).show();
         LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
         //MarkerOptions markerOptions = new MarkerOptions();
         //markerOptions.position(latlng);
