@@ -61,27 +61,27 @@ public class mapActivity extends FragmentActivity
             /*"WhiteSpruce",*/"WinterKing","Yellowhorn"};
     private LatLng[] locations = new LatLng[] {new LatLng(39.0742663, -108.5493843), new LatLng(39.0741504, -108.5492618),
             new LatLng(39.0741242, -108.5486979), new LatLng(39.0742909, -108.5490879), new LatLng(39.0740934, -108.5489564),
-            new LatLng(39.0736086, -108.549962), new LatLng(39.0739769, -108.5510632), new LatLng(39.0745023, -108.5491173),
-            new LatLng(39.0736086, -108.549962), /*new LatLng(39.0736086, -108.549962), new LatLng(39.074387, -108.548378),*/
-            new LatLng(39.0739733, -108.5514381), new LatLng(39.0742073, -108.5487163), new LatLng(39.073705, -108.551438),
-            new LatLng(39.074768, -108.5509806), new LatLng(39.0739733, -108.5514381), /*new LatLng(39.0746731, -108.5508771),*/
-            new LatLng(39.0745776, -108.548776), new LatLng(39.0749561, -108.5518873), new LatLng(39.0739348, -108.5515128),
-            new LatLng(39.0739064, -108.549803), new LatLng(39.0746931, -108.5509023), new LatLng(39.0740323, -108.5506498),
-            new LatLng(39.0741996, -108.5516606), new LatLng(39.0738982, -108.5485951), new LatLng(39.0734252, -108.5516718),
-            new LatLng(39.0745973, -108.5515721), new LatLng(39.0740746, -108.5516371), new LatLng(39.073509, -108.5514231),
-            new LatLng(39.0749684, -108.551932), new LatLng(39.073509, -108.5514231), /*new LatLng(39.0741759, -108.5511806),*/
-            new LatLng(39.0739131, -108.5500567), new LatLng(39.0740292, -108.5513712), new LatLng(39.0739338, -108.5510996),
-            new LatLng(39.0734497, -108.551929), new LatLng(39.0739, -108.551719), new LatLng(39.0737932, -108.5496831),
-            /*new LatLng(39.073509, -108.5514231),*/ new LatLng(39.0740743, -108.5513482), new LatLng(39.0746053, -108.551159),
-            new LatLng(39.0737677, -108.5511678), new LatLng(39.073509, -108.5514231), new LatLng(39.0741961, -108.5508158),
-            new LatLng(39.0735008, -108.550292), new LatLng(39.0735653, -108.549126), new LatLng(39.0747578, -108.5509623),
-            new LatLng(39.0750126, -108.5521945), /*new LatLng(39.073509, -108.5514231),*/ new LatLng(39.0752279, -108.5508726),
-            new LatLng(39.074871, -108.5509511), new LatLng(39.0746731, -108.5508771), /*new LatLng(39.073509, -108.5514231),*/
-            new LatLng(39.073705, -108.5499708), new LatLng(39.0742554, -108.5515343), new LatLng(39.0734463, -108.5497535),
-            new LatLng(39.0745845, -108.5487139), new LatLng(39.0741064, -108.5495885), new LatLng(39.0745121, -108.5515095),
-            new LatLng(39.073822, -108.5519241), /*new LatLng(39.073509, -108.5514231),*/ new LatLng(39.0740271, -108.5518247),
-            /*new LatLng(39.073509, -108.5514231),*/ new LatLng(39.0737584, -108.5518237), /*new LatLng(39.073509, -108.5514231),*/
-            new LatLng(39.0745675, -108.5513996), new LatLng(39.0738283, -108.5486639)};
+            new LatLng(39.0736086, -108.549962), new LatLng(39.0739769, -108.5510632), new LatLng(39.0736086, -108.549962),
+            new LatLng(39.0745023, -108.5491173),/* new LatLng(39.0736086, -108.549962), new LatLng(39.0736086, -108.549962),*/
+            new LatLng(39.074387, -108.548378), new LatLng(39.0739733, -108.5514381), new LatLng(39.0742073, -108.5487163),
+            new LatLng(39.073705, -108.551438), new LatLng(39.074768, -108.5509806), /*new LatLng(39.0739733, -108.5514381),*/
+            new LatLng(39.0746731, -108.5508771), new LatLng(39.0745776, -108.548776), new LatLng(39.0749561, -108.5518873),
+            new LatLng(39.0739348, -108.5515128), new LatLng(39.0739064, -108.549803), new LatLng(39.0746931, -108.5509023),
+            new LatLng(39.0740323, -108.5506498), new LatLng(39.0741996, -108.5516606), new LatLng(39.0738982, -108.5485951),
+            new LatLng(39.0734252, -108.5516718), new LatLng(39.0745973, -108.5515721), new LatLng(39.0740746, -108.5516371),
+            new LatLng(39.073509, -108.5514231), new LatLng(39.0749684, -108.551932), /*new LatLng(39.073509, -108.5514231),*/
+            new LatLng(39.0741759, -108.5511806), new LatLng(39.0739131, -108.5500567), new LatLng(39.0740292, -108.5513712),
+            new LatLng(39.0739338, -108.5510996), new LatLng(39.0734497, -108.551929), new LatLng(39.0739, -108.551719),
+            new LatLng(39.0737932, -108.5496831), /*new LatLng(39.073509, -108.5514231),*/ new LatLng(39.0740743, -108.5513482),
+            new LatLng(39.0746053, -108.551159), new LatLng(39.0737677, -108.5511678), new LatLng(39.073509, -108.5514231),
+            new LatLng(39.0741961, -108.5508158), new LatLng(39.0735008, -108.550292), new LatLng(39.0735653, -108.549126),
+            new LatLng(39.0747578, -108.5509623), new LatLng(39.0750126, -108.5521945), /*new LatLng(39.073509, -108.5514231),*/
+            new LatLng(39.0752279, -108.5508726), new LatLng(39.074871, -108.5509511), new LatLng(39.0741993, -108.5507238),
+            /*new LatLng(39.073509, -108.5514231),*/ new LatLng(39.073705, -108.5499708), new LatLng(39.0742554, -108.5515343),
+            new LatLng(39.0734463, -108.5497535), new LatLng(39.0745845, -108.5487139), new LatLng(39.0741064, -108.5495885),
+            new LatLng(39.0745121, -108.5515095), new LatLng(39.073822, -108.5519241), /*new LatLng(39.073509, -108.5514231),*/
+            new LatLng(39.0740271, -108.5518247), /*new LatLng(39.073509, -108.5514231),*/ new LatLng(39.0737458, -108.5517441),
+            /*new LatLng(39.073509, -108.5514231),*/ new LatLng(39.0745675, -108.5513996), new LatLng(39.0738283, -108.5486639)};
     String provider;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +102,7 @@ public class mapActivity extends FragmentActivity
         parkMap = map;
         parkMap.setMaxZoomPreference(21);
         parkMap.setMinZoomPreference(19);
-        parkMap.getUiSettings().setScrollGesturesEnabled(false);
+        //parkMap.getUiSettings().setScrollGesturesEnabled(false);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(mapActivity.this,
@@ -114,12 +114,13 @@ public class mapActivity extends FragmentActivity
                         MY_PERMISSIONS_REQUEST_LOCATION);
             }
         }
-        Marker[] markers = new Marker[TreeNames.length];
+        Marker[] markers = new Marker[TreeNames.length-1];
         int i = 0;
         while (i < TreeNames.length-1)
         {
             markers[i]=parkMap.addMarker(new MarkerOptions()
-                .position(locations[i]).title(TreeNames[i]));
+                    .position(locations[i])
+                    .title(TreeNames[i]));
             markers[i].setTag(i);
             i++;
         }
@@ -204,7 +205,7 @@ public class mapActivity extends FragmentActivity
                 .position(new LatLng(39.074768, -108.5509806))
                 .title(TreeNames[15]));
         marker.setTag(15);
-
+        //Bristlecone
         /*Marker m17 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.0739733, -108.5514381))
                 .title(TreeNames[16]));
@@ -280,7 +281,7 @@ public class mapActivity extends FragmentActivity
                 .title(TreeNames[30]));
         marker.setTag(30);
         //Incense Cedar
-       /* Marker m32 = parkMap.addMarker(new MarkerOptions()
+        /*Marker m32 = parkMap.addMarker(new MarkerOptions()
                 .position(new LatLng(39.073509, -108.5514231))
                 .title(TreeNames[31]));
         marker.setTag(31);
@@ -590,7 +591,7 @@ public class mapActivity extends FragmentActivity
         //markerOptions.title("your current location");
         //markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
         //currentLocationMarker = parkMap.addMarker(markerOptions);
-        parkMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
+        //parkMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
     }
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
