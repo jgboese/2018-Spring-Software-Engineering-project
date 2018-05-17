@@ -58,7 +58,7 @@ public class Lazy < T > implements AutoCloseable {
             try {
                 ((AutoCloseable) self).close();
             } catch (Exception ex) {
-                Log.e(CoreActivity.TAG, "Exception " + ex + " closing " + self);
+               // Log.e(CoreActivity.TAG, "Exception " + ex + " closing " + self);
             }
         }
     }

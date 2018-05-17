@@ -87,7 +87,7 @@ public class GoogleLogin extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
-                Log.w(TAG, "Google Sign in failed", e);
+                //Log.w(TAG, "Google Sign in failed", e);
                 Toast.makeText(GoogleLogin.this, "Authentication Failed 1", Toast.LENGTH_SHORT).show();
 
 
@@ -100,12 +100,12 @@ public class GoogleLogin extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    Log.d("Tag", "signInWithCredential:success");
+                    //Log.d("Tag", "signInWithCredential:success");
                     FirebaseUser user = mAuth.getCurrentUser();
                     //updateUI(user); Temporary Comment
                 }
                 else{
-                    Log.w("TAG", "signInWithCredential:success", task.getException());
+                    //Log.w("TAG", "signInWithCredential:success", task.getException());
                     Toast.makeText(GoogleLogin.this, "Authentication Failed 2", Toast.LENGTH_SHORT).show();
                     //updateUI(null); Temporary Comment
                 }
